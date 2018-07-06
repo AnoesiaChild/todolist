@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="10.todolist.css">
+</head>
+
+<body>
+    <div id="app">
+        <nav class="navbar navbar-inverse" style='background-color: #000;'>
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">
+                        ToDoList
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <div class='con'>
+            <div class='header'>
+                <h3>亲^_^，您还有{{count}}件事要完成</h3>
+                <input type="text" class='form-control' v-model='title' @keydown.13='add'>
+            </div>
+            <div class='title'>
+                <ul class="clearfix">
+                    <li :class='{active:hash==="all"}'>
+                        <a href="#/all">全部任务</a>
+                    </li>
+                    <li :class='{active:hash==="finish"}'>
+                        <a href="#/finish">已完成</a>
+                    </li>
+                    <li :class='{active:hash==="unfinish"}'>
+                        <a href="#/unfinish">未完成</a>
+                    </li>
+                </ul>
+            </div>
+            <div class='body'>
+                <ul>
+                    <li class='clearfix' v-for='(todo,index) in filterTodos' @dblclick='remember(todo)'>
+                        <div :class='{del:todo.isSelected}' style="float: left;" v-show='cur!==todo'>
+                            <input type="checkbox" v-model='todo.isSelected'>{{todo.title}}
+                        </div>
+                        <input type="text" v-model='todo.title' v-show='cur==todo' @keyup.enter='cancel' @blur='cancel' v-focus='cur==todo'>
+                        <button @click='remove(todo)'>&bigotimes;</button>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    <script src='node_modules/vue/dist/vue.js'></script>
+    <script src='node_modules/axios/dist/axios.js'></script>
+    <script src='10.todolist.js'></script>
+</body>
+
+</html>
